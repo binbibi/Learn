@@ -1,0 +1,163 @@
+win7 workitem  枚举
+2: kd> !exqueue
+**** Critical WorkQueue ( Threads: 6/512, Concurrency: 0/4 )
+THREAD fffffa8018e52380  Cid 0004.0018  Teb: 0000000000000000 Win32Thread: 0000000000000000 WAIT
+THREAD fffffa8018dfdb60  Cid 0004.001c  Teb: 0000000000000000 Win32Thread: 0000000000000000 WAIT
+THREAD fffffa8018e0fb60  Cid 0004.0020  Teb: 0000000000000000 Win32Thread: 0000000000000000 WAIT
+THREAD fffffa8018e0f680  Cid 0004.0024  Teb: 0000000000000000 Win32Thread: 0000000000000000 WAIT
+THREAD fffffa8018e0f1a0  Cid 0004.0028  Teb: 0000000000000000 Win32Thread: 0000000000000000 WAIT
+THREAD fffffa801b605040  Cid 0004.0948  Teb: 0000000000000000 Win32Thread: 0000000000000000 WAIT
+
+
+**** Delayed WorkQueue ( Threads: 7/512, Concurrency: 0/4 )
+THREAD fffffa8018dfc040  Cid 0004.002c  Teb: 0000000000000000 Win32Thread: 0000000000000000 WAIT
+THREAD fffffa8018dfcb60  Cid 0004.0030  Teb: 0000000000000000 Win32Thread: 0000000000000000 WAIT
+THREAD fffffa8018dfc680  Cid 0004.0034  Teb: 0000000000000000 Win32Thread: 0000000000000000 WAIT
+THREAD fffffa8018dfb040  Cid 0004.0038  Teb: 0000000000000000 Win32Thread: 0000000000000000 WAIT
+THREAD fffffa8018dfbb60  Cid 0004.003c  Teb: 0000000000000000 Win32Thread: 0000000000000000 WAIT
+THREAD fffffa8018dfb680  Cid 0004.0040  Teb: 0000000000000000 Win32Thread: 0000000000000000 WAIT
+THREAD fffffa8018dfa040  Cid 0004.0044  Teb: 0000000000000000 Win32Thread: 0000000000000000 WAIT
+
+
+**** HyperCritical WorkQueue ( Threads: 1/512, Concurrency: 0/4 )
+THREAD fffffa8018dfab60  Cid 0004.0048  Teb: 0000000000000000 Win32Thread: 0000000000000000 WAIT
+
+
+2: kd> !thread fffffa8018dfcb60
+THREAD fffffa8018dfcb60  Cid 0004.0030  Teb: 0000000000000000 Win32Thread: 0000000000000000 WAIT: (WrQueue) UserMode Non-Alertable
+    fffff80003e2d658  QueueObject
+Not impersonating
+DeviceMap                 fffff8a000008bc0
+Owning Process            fffffa8018dde890       Image:         System
+Attached Process          N/A            Image:         N/A
+Wait Start TickCount      1691           Ticks: 13755 (0:00:03:34.579)
+Context Switch Count      715            IdealProcessor: 1             
+UserTime                  00:00:00.000
+KernelTime                00:00:00.062
+Win32 Start Address nt!ExpWorkerThread (0xfffff80003c9a910)
+Stack Init fffff880047a8c70 Current fffff880047a88a0
+Base fffff880047a9000 Limit fffff880047a3000 Call 0
+Priority 12 BasePriority 12 UnusualBoost 0 ForegroundBoost 0 IoPriority 2 PagePriority 5
+Kernel stack not resident.
+Child-SP          RetAddr           : Args to Child                                                           : Call Site
+fffff880`047a88e0 fffff800`03c95992 : fffffa80`1acd1010 fffffa80`18dfcb60 fffffa80`00000000 00000000`0000000c : nt!KiSwapContext+0x7a
+fffff880`047a8a20 fffff800`03c989f3 : fffff880`047a8b10 ffffffff`00000002 fffffa80`00000000 00000000`00000080 : nt!KiCommitThreadWait+0x1d2
+fffff880`047a8ab0 fffff800`03c9a9f9 : fffff800`03e20000 fffff800`03f86f01 fffffa80`18dfcb00 00000000`00000000 : nt!KeRemoveQueueEx+0x323
+fffff880`047a8b70 fffff800`03f2dcce : 00000000`00000000 fffffa80`18dfcb60 00000000`00000080 fffffa80`18dde890 : nt!ExpWorkerThread+0xe9
+fffff880`047a8c00 fffff800`03c81fe6 : fffff880`009ef180 fffffa80`18dfcb60 fffff880`009f9fc0 00000000`00000000 : nt!PspSystemThreadStartup+0x5a
+fffff880`047a8c40 00000000`00000000 : fffff880`047a9000 fffff880`047a3000 fffff880`047a88a0 00000000`00000000 : nt!KiStartSystemThread+0x16
+
+2: kd> dps fffff880047a88a0
+fffff880`047a88a0  00000000`785efe53
+fffff880`047a88a8  fffff880`009ef180
+fffff880`047a88b0  fffff880`047a8c70
+fffff880`047a88b8  fffffa80`18dfcb60
+fffff880`047a88c0  fffff880`045df180
+fffff880`047a88c8  fffffa80`18dfcb00
+fffff880`047a88d0  fffffa80`18dfcb60
+fffff880`047a88d8  fffff800`03c92eda nt!KiSwapContext+0x7a
+fffff880`047a88e0  00000003`00000002
+fffff880`047a88e8  fffffa80`1994e000
+fffff880`047a88f0  fffffa80`18e3a0a8
+fffff880`047a88f8  00000000`0000000f
+fffff880`047a8900  fffffa80`18e39c80
+fffff880`047a8908  fffffa80`18d63978
+fffff880`047a8910  00000000`00000000
+fffff880`047a8918  00000000`00000000
+2: kd> dps
+fffff880`047a8920  00000000`00000000
+fffff880`047a8928  00000000`00000000
+fffff880`047a8930  00000000`00000000
+fffff880`047a8938  00000000`00000000
+fffff880`047a8940  00000000`00000000
+fffff880`047a8948  00000000`00000000
+fffff880`047a8950  00000000`00000000
+fffff880`047a8958  00000000`00000000
+fffff880`047a8960  00000000`00000000
+fffff880`047a8968  00000000`00000000
+fffff880`047a8970  00000000`00000000
+fffff880`047a8978  00000000`00000000
+fffff880`047a8980  00000000`00000000
+fffff880`047a8988  00000000`00000000
+fffff880`047a8990  00000000`00000000
+fffff880`047a8998  00000000`00000000
+2: kd> dps
+fffff880`047a89a0  00000000`00000000
+fffff880`047a89a8  00000000`00000000
+fffff880`047a89b0  fffffa80`18e9de50
+fffff880`047a89b8  fffff800`03c9cc00 nt!ExGetCurrentProcessorCounts+0x2c
+fffff880`047a89c0  fffffa80`18dd1c70
+fffff880`047a89c8  00000000`00000000
+fffff880`047a89d0  fffff800`03dc7420 nt!KMPnPEvt_DeviceStart_Stop
+fffff880`047a89d8  fffffa80`1acd0000
+fffff880`047a89e0  fffffa80`18dfcb60
+fffff880`047a89e8  fffff880`009ef180
+fffff880`047a89f0  fffffa80`18dfcc20
+fffff880`047a89f8  00000000`00000000
+fffff880`047a8a00  00000000`00000000
+fffff880`047a8a08  00000000`00000001
+fffff880`047a8a10  fffffa80`18dfcc68
+fffff880`047a8a18  fffff800`03c95992 nt!KiCommitThreadWait+0x1d2
+2: kd> dps
+fffff880`047a8a20  fffffa80`1acd1010
+fffff880`047a8a28  fffffa80`18dfcb60
+fffff880`047a8a30  fffffa80`00000000
+fffff880`047a8a38  00000000`0000000c
+fffff880`047a8a40  fffff880`047a8a80
+fffff880`047a8a48  00000000`00000000
+fffff880`047a8a50  00000000`00000000
+fffff880`047a8a58  00000000`00000000
+fffff880`047a8a60  00000000`00000000
+fffff880`047a8a68  fffffa80`18dfcc68
+fffff880`047a8a70  00000000`00000001
+fffff880`047a8a78  00000000`00000000
+fffff880`047a8a80  fffff880`047a8ba0
+fffff880`047a8a88  fffff800`03e2d658 nt!ExWorkerQueue+0x58
+fffff880`047a8a90  fffffa80`18dfcb60
+fffff880`047a8a98  00000000`00000000
+2: kd> dps
+fffff880`047a8aa0  fffff800`03e20000 nt!KdpSearchPageHits+0x2b80
+fffff880`047a8aa8  fffff800`03c989f3 nt!KeRemoveQueueEx+0x323
+fffff880`047a8ab0  fffff880`047a8b10
+fffff880`047a8ab8  ffffffff`00000002
+fffff880`047a8ac0  fffffa80`00000000
+fffff880`047a8ac8  00000000`00000080
+fffff880`047a8ad0  fffff880`047a8b28
+fffff880`047a8ad8  00000000`000007ff
+fffff880`047a8ae0  fffffa80`1b7ce378
+fffff880`047a8ae8  fffffa80`00000000
+fffff880`047a8af0  fffffa80`18dfcb00
+fffff880`047a8af8  fffff800`03e2d658 nt!ExWorkerQueue+0x58
+fffff880`047a8b00  00000000`00000001
+fffff880`047a8b08  00000000`00000000
+fffff880`047a8b10  00000000`00000001
+fffff880`047a8b18  00000000`00000000
+2: kd> dps
+fffff880`047a8b20  fffffa80`18dfcb60
+fffff880`047a8b28  00000000`00000000
+fffff880`047a8b30  fffffa80`1b7ce378
+fffff880`047a8b38  fffff800`040aba90 nt!PnpDeviceCompletionWorker                                                               // 找到第一个函数;就是WorkerRoutine
+fffff880`047a8b40  00000000`00000001
+fffff880`047a8b48  00000000`00000001
+fffff880`047a8b50  fffffa80`1b7ce340
+fffff880`047a8b58  fffffa80`18dfcb60                                                                                                                 // 跳过
+fffff880`047a8b60  fffff800`03e2d658 nt!ExWorkerQueue+0x58                                                                         // 跳过
+fffff880`047a8b68  fffff800`03c9a9f9 nt!ExpWorkerThread+0xe9                                                                       // 这是堆栈的开始,硬编码第五个???;
+fffff880`047a8b70  fffff800`03e20000 nt!KdpSearchPageHits+0x2b80
+fffff880`047a8b78  fffff800`03f86f01 nt!ObpWaitForMultipleObjects+0x4cb
+fffff880`047a8b80  fffffa80`18dfcb00
+fffff880`047a8b88  00000000`00000000
+fffff880`047a8b90  fffff880`047a8ba0
+fffff880`047a8b98  00000000`00000001
+
+
+对每个内核线程
+Current fffff880047a88a0 -> Stack Init fffff880047a8c70 扫描栈
+地址是 (0xfffff80003c9a910) Win32 Start Address nt!ExpWorkerThread (0xfffff80003c9a910) (0xfffff80003c9a910) nt!ExpWorkerThread+0xe9; 
+
+fffff880`047a88e0 fffff800`03c95992 : fffffa80`1acd1010 fffffa80`18dfcb60 fffffa80`00000000 00000000`0000000c : nt!KiSwapContext+0x7a
+fffff880`047a8a20 fffff800`03c989f3 : fffff880`047a8b10 ffffffff`00000002 fffffa80`00000000 00000000`00000080 : nt!KiCommitThreadWait+0x1d2
+fffff880`047a8ab0 fffff800`03c9a9f9 : fffff800`03e20000 fffff800`03f86f01 fffffa80`18dfcb00 00000000`00000000 : nt!KeRemoveQueueEx+0x323
+fffff880`047a8b70 fffff800`03f2dcce : 00000000`00000000 fffffa80`18dfcb60 00000000`00000080 fffffa80`18dde890 : nt!ExpWorkerThread+0xe9
+fffff880`047a8c00 fffff800`03c81fe6 : fffff880`009ef180 fffffa80`18dfcb60 fffff880`009f9fc0 00000000`00000000 : nt!PspSystemThreadStartup+0x5a
+fffff880`047a8c40 00000000`00000000 : fffff880`047a9000 fffff880`047a3000 fffff880`047a88a0 00000000`00000000 : nt!KiStartSystemThread+0x16
